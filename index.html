@@ -5,77 +5,143 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>"Just for You, a pause in time"</title>
     <style>
+        /* Body Styling */
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #ffccff, #99ccff);
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
+            background-size: 400% 400%;
+            animation: gradient-bg 15s ease infinite;
             color: #333;
             text-align: center;
             margin: 0;
             padding: 0;
         }
+
+        @keyframes gradient-bg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Header Styling */
         header {
+            background: linear-gradient(90deg, #f7971e, #ffd200);
+            color: white;
             padding: 20px;
-            background: #660099;
-            color: white;
+            font-size: 2em;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            border-bottom: 5px solid #ff5e62;
         }
-        .hidden {
-            display: none;
-        }
+
+        /* Buttons */
         button {
-            background-color: #660099;
+            background: linear-gradient(90deg, #ff9966, #ff5e62);
             color: white;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 5px;
-            font-size: 16px;
+            border-radius: 50px;
+            font-size: 18px;
             cursor: pointer;
-            margin: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 94, 98, 0.4);
         }
+
         button:hover {
-            background-color: #9933cc;
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(255, 94, 98, 0.6);
         }
+
+        /* Input Field */
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ff5e62;
+            border-radius: 5px;
+            width: 80%;
+            margin: 10px 0;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #ff9966;
+            outline: none;
+            box-shadow: 0 0 8px rgba(255, 94, 98, 0.6);
+        }
+
+        /* Section Styling */
         .game-area, .quiz-area, .wish-area {
             margin: 20px auto;
             padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
+            border: 1px solid #ff5e62;
+            border-radius: 15px;
             width: 80%;
-            background: white;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
+
+        /* Glowing Text */
+        .glowing-text {
+            font-size: 2.5em;
+            color: #ff9a9e;
+            text-shadow: 0 0 10px #ff5e62, 0 0 20px #fad0c4, 0 0 30px #fbc2eb;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #ff5e62, 0 0 20px #fad0c4, 0 0 30px #fbc2eb;
+            }
+            to {
+                text-shadow: 0 0 20px #ff5e62, 0 0 40px #fad0c4, 0 0 60px #fbc2eb;
+            }
+        }
+
+        /* Game Field */
+        #game-field {
+            background: linear-gradient(45deg, #ffe259, #ffa751);
+            border: 2px dashed #ff5e62;
+            position: relative;
+            overflow: hidden;
+            animation: float 10s infinite linear;
+            height: 300px;
+        }
+
+        @keyframes float {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
         .alien {
             width: 50px;
             position: absolute;
             cursor: pointer;
+            transition: transform 0.3s ease;
         }
+
+        .alien:hover {
+            transform: scale(1.2);
+        }
+
+        /* Image Container */
+        .image-container img {
+            border: 5px solid #ff5e62;
+            transition: transform 0.3s ease;
+        }
+
+        .image-container img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Hidden Elements */
+        .hidden {
+            display: none;
+        }
+
         .message {
             font-size: 1.5em;
             color: #660099;
-        }
-        .image-container {
-            display: inline-block;
-            max-width: 100%;
-            max-height: 100%;
-            overflow: hidden;
-            border-radius: 10px;
-        }
-        .image-container img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-        }
-        .glowing-text {
-            font-size: 2em;
-            color: #ff66ff;
-            text-shadow: 0 0 5px #ff66ff, 0 0 10px #ff99ff, 0 0 20px #ffccff;
-            animation: glow 2s infinite alternate;
-        }
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 10px #ff66ff, 0 0 20px #ff99ff, 0 0 40px #ffccff;
-            }
-            to {
-                text-shadow: 0 0 20px #ff66ff, 0 0 40px #ff99ff, 0 0 80px #ffccff;
-            }
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/confetti-js@0.0.18/dist/index.min.js"></script>
@@ -98,7 +164,7 @@
     <div id="game" class="game-area hidden">
         <h2>Please Catch and Play Miss Pandemic (👻)</h2>
         <p>Catch 10 aliens to win!</p>
-        <div id="game-field" style="position:relative; width:100%; height:300px; background:#eef;"></div>
+        <div id="game-field"></div>
         <p id="score">Score: 0</p>
         <p class="message hidden">You Won! 🎉</p>
         <button onclick="goToQuiz()">Next</button>
@@ -113,11 +179,11 @@
                 <input type="text" name="q1" required>
             </div>
             <div class="question">
-                <p>2."Whose rent do you need to pay from my side?"</p>
+                <p>2. "To whom do you have to pay rent from my side?"</p>
                 <input type="text" name="q2" required>
             </div>
             <div class="question">
-                <p>3."What power do you have?"</p>
+                <p>3. "What power do you have?"</p>
                 <input type="text" name="q3" required>
             </div>
             <div class="question">
@@ -151,16 +217,16 @@
         <button onclick="revealWish(1)">Reveal First Wish</button>
         <button onclick="revealWish(2)">Reveal Second Wish</button>
         <button onclick="revealWish(3)">Reveal Third Wish</button>
-        <p id="wish1" class="hidden">First Wish: "Happy birthday 🎉🎂🎈 to you whose life is as intricate and fascinating as the DNA 🧬 that makes us all unique. May your year ahead be full of growth 🌱, new discoveries 🔍, and moments that evolve into unforgettable memories 📸. Just like in biology, may every chapter of your life continue to adapt 🔄 and flourish 🌸."
+        <p id="wish1" class="hidden">First Wish:"Happy birthday 🎉🎂🎈 to you whose life is as intricate and fascinating as the DNA 🧬 that makes us all unique. May your year ahead be full of growth 🌱, new discoveries 🔍, and moments that evolve into unforgettable memories 📸. Just like in biology, may every chapter of your life continue to adapt 🔄 and flourish 🌸."
      
  🎉</p>
-        <p id="wish2" class="hidden">Second Wish:"To my favorite ghostly buddy! 👻💫
+        <p id="wish2" class="hidden">Second Wish: "To my favorite ghostly buddy! 👻💫
 
 From this alien brain of mine 🛸 to your ethereal spirit 👻, you’re the gravitational pull 🌌 that keeps me orbiting in your universe 🌍 [ab ye na bolna ki aapne planet jao {lke remotwa mil gya hai phir bhi}]. If I’m the alien 👽 exploring strange worlds 🌠, you’re the hauntingly mysterious being 👻 I never want to leave. My param mitra, ghost 👻 or pandemic 🦠.
 
 May your day be filled with all the cosmic joy 🌟 and supernatural love 💖 you deserve. Let’s make this year out of this world 🌍 — just like me! 👽-[nhi tum khud dekh lo, hain koi dusra alien, nhi na] 👻"**🌟</p>
         <p id="wish3" class="hidden">Third Wish: "You possess a rare kind of grace 🌸—one that comes from within, defined by your kindness 💖, wisdom 📚, and the warmth ☀️ you bring to everyone around you. It’s truly a pleasure to know you, and I deeply respect everything you are. I wish for nothing but happiness 😊 and fulfillment 🌟 to follow you in every step you take. Thank you for being you—such an incredible person. I truly hope this year brings you everything you’ve always wished for and more." ❤️
-_________________________________________________________________________________________
+_______________________________________________
 "To the one who fills my days with light 🌞,
 Whose smile makes everything feel so right 😊,
 Today’s your day, a day to shine ✨,
@@ -180,115 +246,109 @@ Grateful for you, forevermore... frnd 👫."</p>
     </div>
 
     <script>
+        // Function to show a specific section and hide others
+        function showSection(sectionId) {
+            const sections = ["welcome", "game", "quiz", "birthday", "wishes"];
+            sections.forEach(id => {
+                const section = document.getElementById(id);
+                if (section.id === sectionId) {
+                    section.classList.remove("hidden");
+                } else {
+                    section.classList.add("hidden");
+                }
+            });
+        }
+
+        // Start the game
         function startGame() {
-            const name = document.getElementById('name').value;
-            if (name) {
-                alert(`Welcome, ${name}!`);
-                document.getElementById('voice-note').play();
-                document.getElementById('welcome').classList.add('hidden');
-                document.getElementById('game').classList.remove('hidden');
-            } else {
-                alert('Please enter your name!');
+            const name = document.getElementById("name").value.trim();
+            if (name === "") {
+                alert("Please enter your name!");
+                return;
+            }
+            document.getElementById("voice-note").play(); // Play voice note
+            showSection("game");
+            initializeGame();
+        }
+
+        // Game logic: Alien catching
+        let score = 0;
+        function initializeGame() {
+            const gameField = document.getElementById("game-field");
+            gameField.innerHTML = ""; // Clear any existing aliens
+            score = 0;
+            updateScore();
+
+            // Create 10 aliens
+            for (let i = 0; i < 10; i++) {
+                createAlien(gameField);
             }
         }
 
-        // Alien Game Logic
-        let score = 0;
-        const gameField = document.getElementById('game-field');
-        for (let i = 0; i < 10; i++) {
-            const alien = document.createElement('img');
-            alien.src = "images/alien_1_optimized.png";
-            alien.className = 'alien';
+        function createAlien(gameField) {
+            const alien = document.createElement("img");
+            alien.src = "alien_image.png"; // Use your alien image here
+            alien.className = "alien";
             alien.style.top = `${Math.random() * 90}%`;
             alien.style.left = `${Math.random() * 90}%`;
-            alien.onclick = () => {
+
+            alien.addEventListener("click", () => {
                 alien.remove();
                 score++;
-                document.getElementById('score').innerText = `Score: ${score}`;
+                updateScore();
                 if (score >= 10) {
-                    document.querySelector('#game .message').classList.remove('hidden');
+                    document.querySelector(".message").classList.remove("hidden");
                 }
-            };
+            });
+
             gameField.appendChild(alien);
         }
 
+        function updateScore() {
+            document.getElementById("score").textContent = `Score: ${score}`;
+        }
+
         function goToQuiz() {
-            document.getElementById('game').classList.add('hidden');
-            document.getElementById('quiz').classList.remove('hidden');
+            showSection("quiz");
         }
 
-        // Quiz Logic
+        // Quiz logic
         function checkAnswers() {
-    const answers = {
-        q1: "ASMRV",
-        q2: "ANTS",
-        q3: "TELEPORTATION",
-        q4: "SMILING",
-        q5: "AKHIL YADAV"
-    };
+            const answers = {
+                q1: "ASMRV",
+                q2: "ANTS",
+                q3: "TELEPORTATION",
+                q4: "SMILING",
+                q5: "AKHIL YADAV" // with correct answer
+            };
 
-    const form = document.getElementById('quiz-form');
-    const formData = new FormData(form);
-    let score = 0;
+            const form = document.getElementById("quiz-form");
+            let score = 0;
 
-    // Loop through the answers and form data to check the responses
-    for (let [key, value] of formData.entries()) {
-        // Clean the value before comparison (trim spaces and handle case)
-        const cleanedAnswer = value.trim().toUpperCase();
-        const correctAnswer = answers[key].toUpperCase();
+            for (const [key, value] of Object.entries(answers)) {
+                const userAnswer = form[key].value.trim().toLowerCase();
+                if (userAnswer === value.toLowerCase()) {
+                    score++;
+                }
+            }
 
-        if (cleanedAnswer === correctAnswer) {
-            score++;
-        }
-    }
+            const result = document.getElementById("quiz-result");
+            result.textContent = `You got ${score} out of ${Object.keys(answers).length} correct!`;
+            result.classList.remove("hidden");
 
-    const totalQuestions = Object.keys(answers).length;
-    const result = document.getElementById('quiz-result');
-
-    if (score === totalQuestions) {
-        result.textContent = "MISSION SUCCESSFUL! 🎉 Redirecting...";
-        setTimeout(() => {
-            document.getElementById('quiz').classList.add('hidden');
-            document.getElementById('birthday').classList.remove('hidden');
-            startConfetti();
-        }, 2000);
-    } else {
-        result.textContent = `You got ${score} out of ${totalQuestions} correct. Try again!`;
-    }
-    result.classList.remove('hidden');
-}
-
-        // Confetti Effect
-        function startConfetti() {
-            const confettiCanvas = document.getElementById('confetti-canvas');
-            confettiCanvas.style.position = 'absolute';
-            confettiCanvas.style.top = '0';
-            confettiCanvas.style.left = '0';
-            confettiCanvas.style.width = '100%';
-            confettiCanvas.style.height = '100%';
-            confettiCanvas.style.pointerEvents = 'none';
-            confettiCanvas.style.zIndex = '1000';
-
-            const confettiSettings = { target: 'confetti-canvas', max: 150, clock: 25 };
-            const confetti = new ConfettiGenerator(confettiSettings);
-            confetti.render();
-
-            setTimeout(() => {
-                confetti.clear(); // Stop the confetti after 10 seconds
-            }, 10000);
+            if (score === Object.keys(answers).length) {
+                showSection("birthday");
+            } else {
+                alert("Try again for a perfect score!");
+            }
         }
 
-        // Hidden Wishes
         function goToWishes() {
-            document.getElementById('birthday').classList.add('hidden');
-            document.getElementById('wishes').classList.remove('hidden');
+            showSection("wishes");
         }
 
         function revealWish(wishNumber) {
-            const wish = document.getElementById('wish' + wishNumber);
-            if (wish) {
-                wish.classList.remove('hidden');
-            }
+            document.getElementById(`wish${wishNumber}`).classList.remove("hidden");
         }
     </script>
 </body>

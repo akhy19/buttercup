@@ -126,8 +126,14 @@
 
         /* Image Container */
         .image-container img {
-            border: 5px solid #ff5e62;
-            transition: transform 0.3s ease;
+    border: 5px solid #ff5e62;
+    max-width: 100%; /* Ensures the image does not exceed the width of its container */
+    height: auto; /* Maintains the aspect ratio */
+    max-height: 300px; /* Optional: Ensures the image does not grow too tall */
+    transition: transform 0.3s ease;
+    object-fit: contain; /* Adjusts how the image fits within the space */
+}
+
         }
 
         .image-container img:hover {
@@ -187,7 +193,7 @@
                 <input type="text" name="q3" required>
             </div>
             <div class="question">
-                <p>4. "Which do you have to keep?"</p>
+                <p>4. "What do you have to keep?"</p>
                 <input type="text" name="q4" required>
             </div>
             <div class="question">
@@ -205,7 +211,7 @@
         <canvas id="confetti-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none;"></canvas>
         <h2 class="glowing-text" style="position: relative; z-index: 2;">Happy Birthday dear buttercup❣👻</h2>
         <div class="image-container" style="position: relative; z-index: 1;">
-            <img src="images/Gold%20and%20Brown%20Happy%20Birthday%20Photo%20Collage.png" alt="Her Picture" alt="Her Picture">
+            <img src="images/Gold%20and%20Brown%20Happy%20Birthday%20Photo%20Collage.png" alt="Her Picture">
         </div>
         <audio src="voice%20note/WhatsApp%20Audio%202024-12-24%20at%2023.29.26_6aa34e76.mp3" preload="auto" controls style="position: relative; z-index: 2;"></audio>
         <p style="position: relative; z-index: 2;">"Happy Birthday, dear✨, the catalyst⚡️ for all the positive chemical reactions in my brain."! Wishing you all the love and happiness!</p>
